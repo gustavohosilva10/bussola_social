@@ -1,70 +1,82 @@
-# 🛒 Shopping Cart Application
+# 🛒 Carrinho de Compras
 
-A modern microservices architecture application with Laravel Octane (API) and React (Frontend).
+Aplicação de carrinho de compras com arquitetura de microsserviços usando Laravel Octane (API) e React (Frontend).
 
-[![Tests](https://img.shields.io/badge/tests-23%20passed-brightgreen)]()
-[![Assertions](https://img.shields.io/badge/assertions-108-blue)]()
-[![Architecture](https://img.shields.io/badge/architecture-Request→Controller→Interface→Repository-orange)]()
+## 🚀 Como Executar
 
-## 🏗️ Architecture
-
-- **Backend**: Laravel 12 + Octane (Swoole) - High-performance API
-- **Frontend**: React 18 + Vite - Modern UI with hot-reloading
-- **Infrastructure**: Docker Compose for orchestration
-- **Tests**: PHPUnit with 23 tests and 108 assertions
-
-### Architecture Pattern
-
-```
-Request → Controller → Interface → Repository/Service
-```
-
-All code follows this strict architectural pattern with:
-- ✅ Full PHP 8.2 type hints
-- ✅ DTOs for data transfer
-- ✅ Interface contracts
-- ✅ Dependency injection
-- ✅ Code in English
-
-## 🚀 Quick Start
-
-### Prerequisites
+### Pré-requisitos
 - Docker
 - Docker Compose
 
-### Installation
+### Instalação e Execução
 
-1. Navigate to the project directory:
 ```bash
-cd /home/gholiveira/www/processos_seletivos/bussola_social
-```
+# Clone o repositório
+git clone https://github.com/gustavohosilva10/bussola_social.git
+cd bussola_social
 
-2. Start the services:
-```bash
+# Inicie os containers
 docker-compose up -d --build
 ```
 
-3. Access the application:
+### Acesse a aplicação
 - **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:8003/api/products
+- **Backend API**: http://localhost:8003
 
-### Run Tests
+## 🧪 Testes
 
 ```bash
 docker-compose exec backend php artisan test
 ```
 
-**Result**: 23 tests, 108 assertions, all passing ✅
+**Resultado**: 23 testes, 108 assertions ✅
 
-### API Endpoints
+## 🏗️ Arquitetura
 
-#### Get Products
-```
+### Backend (Laravel Octane + Swoole)
+- Padrão: `Request → Controller → Interface → Repository`
+- DTOs para transferência de dados
+- Totalmente tipado (PHP 8.2)
+- Injeção de dependências
+
+### Frontend (React + Vite)
+- Interface em português
+- Hot-reloading
+- Comunicação com API REST
+
+### Infraestrutura
+- Docker Compose para orquestração
+- Volumes para desenvolvimento com hot-reload
+
+## 📦 Funcionalidades
+
+### Produtos
+- 5 produtos pré-cadastrados
+- Listagem via API REST
+
+### Carrinho de Compras
+- Adicionar/remover produtos
+- Ajustar quantidades
+- Calcular total com diferentes formas de pagamento
+
+### Formas de Pagamento
+
+1. **PIX**: 10% de desconto
+2. **Cartão de Crédito à Vista**: 10% de desconto
+3. **Cartão de Crédito Parcelado**: 
+   - 2x a 12x
+   - 1% de juros compostos por parcela
+   - Fórmula: M = P × (1 + 0,01)^n
+
+## 📡 API
+
+### Listar Produtos
+```http
 GET http://localhost:8003/api/products
 ```
 
-#### Calculate Cart Total
-```
+### Calcular Carrinho
+```http
 POST http://localhost:8003/api/cart/calculate
 Content-Type: application/json
 
@@ -80,72 +92,65 @@ Content-Type: application/json
 }
 ```
 
-### Payment Methods
+### Métodos de Pagamento Disponíveis
+- `PIX`
+- `CREDIT_CARD_FULL_PAYMENT`
+- `CREDIT_CARD_INSTALLMENTS` (installments: 2-12)
 
-- **PIX**: 10% discount
-- **CREDIT_CARD_FULL_PAYMENT**: 10% discount
-- **CREDIT_CARD_INSTALLMENTS**: 1% compound interest per installment (2x to 12x)
+## 🛠️ Comandos Úteis
 
-### Compound Interest Formula
-
-For installments: M = P × (1 + i)^n
-
-Where:
-- M = Final amount
-- P = Principal (cart subtotal)
-- i = Interest rate (0.01 or 1%)
-- n = Number of installments
-
-## 🧪 Running Tests
-
+### Backend
 ```bash
-docker-compose exec backend php artisan test
-```
-
-## 📁 Project Structure
-
-```
-shopping-cart-app/
-├── docker-compose.yml
-├── backend/                 # Laravel Octane API
-│   ├── app/
-│   │   ├── Http/
-│   │   │   └── Controllers/
-│   │   ├── Repositories/
-│   │   ├── Interfaces/
-│   │   └── DTOs/
-│   └── tests/
-└── frontend/               # React Application
-    └── src/
-```
-
-## 🛠️ Development
-
-The project uses Docker volumes for hot-reloading in both backend and frontend.
-
-### Backend Commands
-
-```bash
-# Access backend container
+# Acessar container
 docker-compose exec backend bash
 
-# Run migrations
-php artisan migrate
-
-# Run tests
+# Rodar testes
 php artisan test
+
+# Ver logs
+docker logs shopping-cart-backend
 ```
 
-### Frontend Commands
-
+### Frontend
 ```bash
-# Access frontend container
+# Acessar container
 docker-compose exec frontend sh
 
-# Install new package
-npm install package-name
+# Ver logs
+docker logs shopping-cart-frontend
 ```
 
-## 📝 License
+### Parar os containers
+```bash
+docker-compose down
+```
 
-This project is for evaluation purposes.
+## 📁 Estrutura do Projeto
+
+```
+bussola_social/
+├── docker-compose.yml
+├── backend/                    # Laravel Octane API
+│   ├── app/
+│   │   ├── DTOs/              # Data Transfer Objects
+│   │   ├── Http/Controllers/  # Controladores
+│   │   ├── Interfaces/        # Contratos
+│   │   ├── Repositories/      # Repositórios
+│   │   └── Services/          # Serviços
+│   └── tests/                 # Testes PHPUnit
+└── frontend/                   # React App
+    └── src/
+        ├── App.jsx            # Componente principal
+        └── App.css            # Estilos
+```
+
+## 💡 Tecnologias
+
+- **Backend**: Laravel 12, Octane, Swoole, PHP 8.2
+- **Frontend**: React 18, Vite
+- **Containerização**: Docker, Docker Compose
+- **Testes**: PHPUnit
+
+## 📝 Notas
+
+Este projeto foi desenvolvido como parte de um processo seletivo.
