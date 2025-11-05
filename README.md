@@ -60,12 +60,12 @@ docker-compose exec backend php artisan test
 
 #### Get Products
 ```
-GET http://localhost:8000/api/products
+GET http://localhost:8003/api/products
 ```
 
 #### Calculate Cart Total
 ```
-POST http://localhost:8000/api/cart/calculate
+POST http://localhost:8003/api/cart/calculate
 Content-Type: application/json
 
 {
@@ -149,4 +149,3 @@ npm install package-name
 ## 📝 License
 
 This project is for evaluation purposes.
-
